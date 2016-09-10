@@ -1,7 +1,6 @@
 package com.stzhangjk.working.tools;
 
 import com.stzhangjk.working.entity.Article;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -15,8 +14,7 @@ public class ArticleReader {
 
     private List<Article> docs = new ArrayList<Article>();
 
-
-    public List<String> readFinalContents(String txtName, String pdfName, String yyyy, String MM) {
+    public List<String> readFinalContents(String txtName, String yyyy, String MM) {
         List<String> contents = new ArrayList<String>();
         try {
             File file = new File(txtName);
@@ -57,55 +55,12 @@ public class ArticleReader {
             }
             Collections.reverse(docs);
             setID(docs, yyyy + MM);
-            readPages(docs, pdfName, yyyy, MM);
+            //readPages(docs, pdfName, yyyy, MM);
             insertIntoContents(docs, contents);
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return contents;
-    }
-
-    private void readPages(List<Article> docs, String pdfName, String yyyy, String MM) {
-
-        int count = docs.size();
-        PdfReader reader = new PdfReader();
-        String pdf = reader.getALL(pdfName);
-        List<String> idStr = Util.matchString(pdf, Pattern.compile("\\[文章编号\\] [0-9]{4} - [0-9]{4}\\(" + yyyy + "\\)" + MM + " - [0-9]{4} - [0-9]{2}"));
-
-        for (int size = idStr.size(), i = 0; i < size; i++) {
-            String str = idStr.get(i);
-            if (str != null && !str.equals("")) {
-                Pattern pattern = Pattern.compile("- [0-9]{4} -");
-                Matcher matcher = pattern.matcher(str);
-                while (matcher.find()) {
-                    str = matcher.group();
-                }
-            }
-            if (str != null && !str.equals("")) {
-                Pattern pattern = Pattern.compile("[0-9]{4}");
-                Matcher matcher = pattern.matcher(str);
-                while (matcher.find()) {
-                    str = matcher.group();
-                }
-            }
-            idStr.set(i,str);
-        }
-
-        Collections.reverse(idStr);
-        System.out.println(idStr);
-        if (count == idStr.size()) {
-            for (int i = 0; i < count; i++) {
-                docs.get(i).setStartPage(Integer.parseInt(idStr.get(i)));
-            }
-            docs.get(0).setEndPage(reader.getMaxPage());
-            for (int i = 1; i < count; i++) {
-                docs.get(i).setEndPage(docs.get(i - 1).getStartPage() - 1);
-            }
-        } else {
-            System.out.println("匹配到的页码数量不与文章数相同");
-        }
     }
 
     private void setID(List<Article> docs, String prefix) {

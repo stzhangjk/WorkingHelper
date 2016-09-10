@@ -4,13 +4,10 @@ import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 import com.stzhangjk.working.entity.Article;
 import com.stzhangjk.working.tools.ArticleReader;
-import com.stzhangjk.working.tools.PdfReader;
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -40,13 +37,13 @@ public class Main {
 
     public static void main(String[] args) {
         List<String> contents = new ArticleReader().readFinalContents(
-                "D:\\CodePrectice\\Intellij\\WorkingHelper\\src\\main\\resource\\test.txt",
-                "D:\\CodePrectice\\Intellij\\WorkingHelper\\src\\main\\resource\\集美大学学报（自然版）2016年第1期.pdf",
-                "2016",
-                "01"
+                "F:\\coding\\Intellij\\WorkingHelper\\src\\main\\resource\\test.txt",
+                "2015",
+                "02"
         );
         registerKey(contents);
-
-        System.out.println(contents);
+        for(String s : contents){
+            System.out.println(s);
+        }
     }
 }
