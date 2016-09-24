@@ -33,17 +33,20 @@ public class ArticleReader {
                     line = line.replace("　"," ");           //替换全角空格为半角空格
                 }
 
-                System.out.println(line);
+
                 if (!line.equals("")) {
                     temp[i % 10] = line;
                     if (i % 10 == 9) {
+                        for(String s : temp){
+                            System.out.println(s);
+                        }
                         Article doc = new Article();
                         doc.setTitleCN(temp[0]);
                         doc.setAuthorCN(temp[1]);
                         doc.setUnitCN(temp[2]);
-                        temp[3] = temp[3].replace(Util.matchString(temp[3], Pattern.compile("[\\[【［][　 ]*摘[　 ]*要[　 ]*[\\]】］]")).get(0), "").trim();
+                        temp[3] = temp[3].replace(Util.matchString(temp[3], Pattern.compile("[\\[【［]*[　 ]*摘[　 ]*要[　 ]*[\\]】］]*[:：]?")).get(0), "").trim();
                         doc.setAbstractCN(temp[3]);
-                        temp[4] = temp[4].replace(Util.matchString(temp[4], Pattern.compile("[\\[【［][　 ]*关[　 ]*键[　 ]*词[　 ]*[\\]】］]")).get(0), "").trim();
+                        temp[4] = temp[4].replace(Util.matchString(temp[4], Pattern.compile("[\\[【［]*[　 ]*关[　 ]*键[　 ]*词[　 ]*[\\]】］]*[:：]?")).get(0), "").trim();
                         doc.setKeyWordCN(temp[4]);
 
 
