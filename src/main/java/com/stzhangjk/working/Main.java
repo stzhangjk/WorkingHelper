@@ -38,8 +38,8 @@ public class Main {
     public static void main(String[] args) {
         List<String> contents = new ArticleReader().readFinalContents(
                 "F:\\coding\\Intellij\\WorkingHelper\\src\\main\\resource\\test.txt",
-                "2015",
-                "02"
+                "2016",
+                "04"
         );
         registerKey(contents);
         for(String s : contents){

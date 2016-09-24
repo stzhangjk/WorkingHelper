@@ -21,12 +21,19 @@ public class ArticleReader {
             Scanner scanner = new Scanner(file, "utf-8");
             String[] temp = new String[10];
             for (int i = 0; scanner.hasNext(); ) {
-                String line = scanner.nextLine().trim();
+
+                String line = scanner.nextLine().trim();    //消除左右空格
+
+                line = line.replace("\uE003","");           //消除框框字符
+                line = line.replace("\uE004","");                 //消除框框字符
+
                 Pattern pattern = Pattern.compile("[　]+");
                 Matcher matcher = pattern.matcher(line);
                 while(matcher.find()){
-                    line = line.replace("　"," ");
+                    line = line.replace("　"," ");           //替换全角空格为半角空格
                 }
+
+                System.out.println(line);
                 if (!line.equals("")) {
                     temp[i % 10] = line;
                     if (i % 10 == 9) {
